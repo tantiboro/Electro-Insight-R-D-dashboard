@@ -7,7 +7,7 @@ import generator
 import analyzer
 import chemometrics 
 import structure_viz 
-import kaggle_loader
+
 
 st.set_page_config(page_title="Electro-Insight", layout="wide")
 
@@ -18,21 +18,6 @@ tab1, tab2, tab3 = st.tabs(["🔬 Single Experiment", "📊 Chemometrics", "🧪
 
 # --- SIDEBAR ---
 st.sidebar.header("Data Pipeline")
-data_source = st.sidebar.radio("Source:", ["Synthetic Sim", "Kaggle (MIT Battery)"])
-
-if st.sidebar.button("Load/Generate Data"):
-    if data_source == "Synthetic Sim":
-        generator.create_batch_data(12) 
-        st.sidebar.success("Synthetic batch generated!")
-        
-    elif data_source == "Kaggle (MIT Battery)":
-        with st.spinner("Downloading/Loading from Kaggle..."):
-            # This will cache the data so it doesn't re-download every time
-            msg = kaggle_loader.fetch_and_process_kaggle_data()
-            if "Error" in msg:
-                st.sidebar.error(msg)
-            else:
-                st.sidebar.success(msg)
 if st.sidebar.button("Generate New Lab Data"):
     generator.create_batch_data(12) 
     st.sidebar.success("New batch data generated!")
